@@ -70,14 +70,12 @@ export function ShopArchiveClient({ products, categories }: { products: Product[
                 <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/5" />
               </div>
               
-              <div className="flex justify-between items-start font-sans mt-4">
-                <div className="flex flex-col gap-1 max-w-[70%]">
-                  <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground">{product.brand}</span>
-                  <h3 className="text-sm font-medium tracking-wide uppercase leading-relaxed group-hover:text-muted-foreground transition-colors">
-                    {product.name}
-                  </h3>
-                </div>
-                <p className="text-sm text-muted-foreground tracking-wider">₦{product.price.toLocaleString()}</p>
+              <div className="flex flex-col font-sans mt-4 space-y-1">
+                <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground">{product.brand}</span>
+                <h3 className="text-xs md:text-sm font-medium tracking-wide uppercase leading-relaxed group-hover:text-muted-foreground transition-colors">
+                  {product.name}
+                </h3>
+                <p className="text-xs md:text-sm text-muted-foreground tracking-wider mt-1">₦{product.price.toLocaleString()}</p>
               </div>
             </Link>
           );

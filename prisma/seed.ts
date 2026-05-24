@@ -1,6 +1,11 @@
 import { PrismaClient } from '@prisma/client'
+import crypto from 'crypto'
 
 const prisma = new PrismaClient()
+
+function hashPassword(password: string): string {
+  return crypto.createHash("sha256").update(password).digest("hex");
+}
 
 async function main() {
   console.log('Seeding database...');
@@ -11,13 +16,13 @@ async function main() {
     update: {
       name: 'SKYE Admin',
       role: 'ADMIN',
-      password: '240a8e1056526170669147820a46973e6d8a43f8e561cf25c8b2d41a7c36a4fa', // SHA-256 of 'admin123'
+      password: hashPassword('admin123'),
     },
     create: {
       name: 'SKYE Admin',
       email: 'admin@skye.com',
       role: 'ADMIN',
-      password: '240a8e1056526170669147820a46973e6d8a43f8e561cf25c8b2d41a7c36a4fa', // SHA-256 of 'admin123'
+      password: hashPassword('admin123'),
     }
   });
 

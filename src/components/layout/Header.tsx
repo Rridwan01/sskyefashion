@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
-import { User, Menu, X } from "lucide-react";
+import { User, Menu, X, ShoppingBag } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useCartStore } from "@/store/cartStore";
 import { ThemeToggle } from "./ThemeToggle";
@@ -82,7 +82,8 @@ export function Header() {
 
         <div className="flex items-center space-x-6">
           <ThemeToggle />
-          <button onClick={openCart} className="relative p-2 hover:opacity-70 transition-opacity flex items-center gap-2">
+          <button onClick={openCart} className="relative p-2 hover:opacity-70 transition-opacity flex items-center gap-2" aria-label="Shopping Bag">
+            <ShoppingBag className="w-4 h-4" />
             <span className="font-sans text-xs uppercase tracking-widest hidden sm:inline">Bag</span>
             {cartItemCount > 0 && (
               <span className="text-[10px] bg-foreground text-background px-1.5 py-0.5 rounded-full font-medium leading-none">

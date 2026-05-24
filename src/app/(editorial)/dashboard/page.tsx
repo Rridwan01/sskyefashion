@@ -25,12 +25,24 @@ export default async function ClientDashboard() {
         
         {/* Welcome Section */}
         <section className="space-y-4">
-          <h1 className="font-serif text-3xl md:text-5xl uppercase tracking-widest font-light">
-            Welcome, {session.user.name?.split(' ')[0] || 'Client'}
-          </h1>
-          <p className="font-sans text-xs uppercase tracking-widest text-muted-foreground">
-            Manage your collection and concierge requests.
-          </p>
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6">
+            <div className="space-y-4">
+              <h1 className="font-serif text-3xl md:text-5xl uppercase tracking-widest font-light">
+                Welcome, {session.user.name?.split(' ')[0] || 'Client'}
+              </h1>
+              <p className="font-sans text-xs uppercase tracking-widest text-muted-foreground">
+                Manage your collection and concierge requests.
+              </p>
+            </div>
+            {(session.user as any).role === "ADMIN" && (
+              <Link 
+                href="/admin" 
+                className="font-sans text-xs uppercase tracking-[0.2em] bg-foreground text-background px-6 py-3 hover:bg-foreground/90 transition-colors shrink-0 text-center"
+              >
+                Access Admin Panel
+              </Link>
+            )}
+          </div>
         </section>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">

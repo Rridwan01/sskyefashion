@@ -1,5 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 
+// Fallback logic to map Vercel's auto-generated Supabase Integration env vars
+if (process.env.POSTGRES_PRISMA_URL && (!process.env.DATABASE_URL || process.env.DATABASE_URL.includes("localhost"))) {
+  process.env.DATABASE_URL = process.env.POSTGRES_PRISMA_URL;
+}
+
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
