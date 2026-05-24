@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String?
+  role          Role      @default(CUSTOMER)
+  orders        Order[]
+  requests      ItemRequest[]
+  appointments  ShowroomAppointment[]
+  createdAt     DateTime  @default(now())
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  image       String?
+  products    Product[]
+}
+
+model Product {
+  id                    String    @id @default(cuid())
+  name                  String
+  slug                  String    @unique
+  brand                 String    @default("SKYE Atelier")
+  collection            String?
+  aesthetic             String?
+  description           String    @db.Text
+  editorialDescription  String?   @db.Text
+  fitNotes              String?   @db.Text
+  stylingNotes          String?   @db.Text
+  price                 Float
+  currency              String    @default("USD")
+  images                String[]  // Cloudinary URLs
+  inventory             Int
+  sizes                 String[]
+  colors                String[]
+  materials             String[]
+  tags                  String[]
+  categoryId            String
+  category              Category  @relation(fields: [categoryId], references: [id])
+  isNew                 Boolean   @default(true)
+  isFeatured            Boolean   @default(false)
+  createdAt             DateTime  @default(now())
+}
+
+model Order {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  status      OrderStatus @default(PENDING)
+  totalAmount Float
+  createdAt   DateTime  @default(now())
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model ItemRequest {
+  id          String    @id @default(cuid())
+  userId      String?
+  user        User?     @relation(fields: [userId], references: [id])
+  description String
+  imageUrl    String?
+  status      RequestStatus @default(PENDING)
+  createdAt   DateTime  @default(now())
+}
+
+enum RequestStatus {
+  PENDING
+  REVIEWING
+  ACCEPTED
+  REJECTED
+}
+
+model ShowroomAppointment {
+  id          String   @id @default(cuid())
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  name        String
+  email       String
+  showroom    String   // "Ibadan Atelier", "NYC SoHo Atelier", "Paris Rue Saint-Honoré"
+  date        DateTime
+  timeSlot    String   // e.g. "11:00 AM - 12:00 PM"
+  notes       String?  @db.Text
+  status      String   @default("PENDING")
+  createdAt   DateTime @default(now())
+}
+
+model ContactInquiry {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String   // "General Inquiry", "Press / Media", "Collaborations", "Custom Order"
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+}
