@@ -104,12 +104,15 @@ export function CartSlideOut() {
                   body: JSON.stringify({ items }),
                 });
                 const data = await res.json();
+                if (!res.ok) {
+                  throw new Error(data.error || "Checkout failed");
+                }
                 if (data.url) {
                   window.location.href = data.url;
                 }
-              } catch (error) {
+              } catch (error: any) {
                 console.error("Checkout failed:", error);
-                alert("Checkout failed. Please try again.");
+                alert(error.message || "Checkout failed. Please try again.");
               }
             }}
             className="w-full py-4 bg-foreground text-background font-sans text-xs uppercase tracking-[0.2em] hover:bg-foreground/90 transition-colors disabled:opacity-50"

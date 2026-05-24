@@ -66,7 +66,7 @@ export function LookbookStripClient({ products }: { products: Product[] }) {
                 />
                 
                 {/* 1-Line Minimal Construction Note Overlay */}
-                <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end text-left pointer-events-none select-none z-20">
+                <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end text-left pointer-events-none select-none z-20">
                   <span className="font-mono text-[9px] tracking-[0.2em] text-white/50">{product.brand}</span>
                   <h4 className="font-serif text-lg text-white tracking-widest uppercase mt-1 truncate">{product.name}</h4>
                   <p className="font-sans text-[9px] tracking-widest text-white/70 uppercase mt-2 font-mono border-t border-white/10 pt-2 truncate">

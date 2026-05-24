@@ -11,11 +11,13 @@ async function main() {
     update: {
       name: 'SKYE Admin',
       role: 'ADMIN',
+      password: '240a8e1056526170669147820a46973e6d8a43f8e561cf25c8b2d41a7c36a4fa', // SHA-256 of 'admin123'
     },
     create: {
       name: 'SKYE Admin',
       email: 'admin@skye.com',
       role: 'ADMIN',
+      password: '240a8e1056526170669147820a46973e6d8a43f8e561cf25c8b2d41a7c36a4fa', // SHA-256 of 'admin123'
     }
   });
 

@@ -1,7 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useActionState } from "react";
+import { registerUser } from "@/app/actions/auth";
 
 export default function RegisterPage() {
+  const [errorMessage, dispatch] = useActionState(registerUser, undefined);
+
   return (
     <main className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center pt-24 pb-12 px-6">
       
@@ -16,7 +22,13 @@ export default function RegisterPage() {
         </div>
 
         {/* Form */}
-        <form className="space-y-12">
+        <form action={dispatch} className="space-y-12">
+          
+          {errorMessage && (
+            <div className="text-red-500 font-sans text-xs tracking-widest uppercase text-center">
+              {errorMessage}
+            </div>
+          )}
           
           <div className="relative group">
             <input 

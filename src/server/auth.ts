@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 import { authConfig } from "../auth.config";
+import { hashPassword } from "@/lib/hash";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
@@ -15,22 +16,33 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        // In a real app, you would hash the password and compare it
         const user = await prisma.user.findUnique({
           where: { email: credentials.email as string },
         });
 
-        // Demo logic: allow any login if they type 'password' or if the user exists
-        if (user || credentials.password === "password") {
-          return {
-            id: user?.id || "demo-id",
-            name: user?.name || "Demo User",
-            email: credentials.email as string,
-            role: user?.role || "CUSTOMER",
-          };
+        if (!user) return null;
+
+        const inputPassword = credentials.password as string;
+
+        // If user has a password in the database, compare hashes
+        if (user.password) {
+          const hashedPassword = hashPassword(inputPassword);
+          if (user.password !== hashedPassword) {
+            return null;
+          }
+        } else {
+          // Fallback check for seeded accounts without passwords set
+          if (inputPassword !== "password") {
+            return null;
+          }
         }
 
-        return null;
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        };
       },
     }),
   ],

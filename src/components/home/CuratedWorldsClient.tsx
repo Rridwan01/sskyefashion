@@ -134,7 +134,7 @@ export function CuratedWorldsClient({ categories }: { categories: Category[] }) 
                   />
                   
                   {/* Subtle metadata overlay on hover */}
-                  <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-[600ms] ease-out flex flex-col justify-end text-left select-none pointer-events-none z-20">
+                  <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-[600ms] ease-out flex flex-col justify-end text-left pointer-events-none select-none z-20">
                     <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/40">{meta.code}</span>
                     <h3 className="font-serif text-2xl text-white tracking-widest uppercase mt-2">
                       {cat.name}
