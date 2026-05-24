@@ -1,3 +1,4 @@
+
 # S Skye Fashion (SKYE Atelier)
 
 An immersive, high-end luxury editorial fashion showcase, e-commerce storefront, showroom booking platform, and custom couture request system. Built using **Next.js 16 (App Router)**, **Tailwind CSS v4**, **Prisma ORM (PostgreSQL)**, **Stripe**, **Paystack**, and micro-interactions powered by **GSAP** & **Framer Motion**.

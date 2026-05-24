@@ -41,9 +41,9 @@ export function SignatureFooter() {
         </div>
         
         <div className="flex gap-8 font-sans text-xs uppercase tracking-widest text-foreground/50">
-          <a href="#" className="hover:text-foreground transition-colors">Instagram</a>
+          <a href="https://www.instagram.com/sskye_fashion?igsh=MWQzdmlka212MTZ1bQ==" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Instagram</a>
+          <a href="https://wa.me/2348100887247" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">WhatsApp</a>
           <a href="#" className="hover:text-foreground transition-colors">Twitter</a>
-          <a href="#" className="hover:text-foreground transition-colors">Pinterest</a>
         </div>
       </div>
 

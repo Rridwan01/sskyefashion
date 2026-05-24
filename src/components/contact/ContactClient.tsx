@@ -215,6 +215,17 @@ export function ContactClient() {
                 <p className="font-sans text-xs md:text-sm text-white/70 tracking-wider leading-relaxed max-w-md">
                   For press kits, editorial requests, collaborations, or global custom couture order inquiries, please use our secure digital form.
                 </p>
+                <div className="pt-6 mt-4 border-t border-white/10 flex flex-col gap-3 font-sans text-[10px] uppercase tracking-widest text-white/60">
+                  <span className="text-[9px] text-white/30 tracking-[0.2em]">Direct Channels</span>
+                  <div className="flex flex-col gap-2">
+                    <a href="https://wa.me/2348100887247" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
+                      <span>WhatsApp:</span> <span className="text-white">+234 810 088 7247</span>
+                    </a>
+                    <a href="https://www.instagram.com/sskye_fashion?igsh=MWQzdmlka212MTZ1bQ==" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
+                      <span>Instagram:</span> <span className="text-white">@sskye_fashion</span>
+                    </a>
+                  </div>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
