@@ -14,10 +14,19 @@ export default async function ClientDashboard() {
   }
 
   // Fetch mock or real data
-  const requests = await prisma.itemRequest.findMany({
-    where: { userId: session.user.id },
-    orderBy: { createdAt: "desc" },
-  });
+  const [requests, orders] = await Promise.all([
+    prisma.itemRequest.findMany({
+      where: { userId: session.user.id },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.order.findMany({
+      where: {
+        userId: session.user.id,
+        status: { in: ["PROCESSING", "SHIPPED", "DELIVERED", "PENDING"] }
+      },
+      orderBy: { createdAt: "desc" },
+    })
+  ]);
 
   return (
     <main className="min-h-screen bg-background text-foreground pt-32 pb-24 px-6 md:px-12">
@@ -52,20 +61,44 @@ export default async function ClientDashboard() {
             
             <section className="space-y-8">
               <h2 className="font-sans text-sm tracking-[0.2em] uppercase border-b border-muted pb-4">My Collection</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Mock Item */}
-                <div className="group cursor-pointer">
-                  <div className="relative aspect-[3/4] bg-muted overflow-hidden mb-4">
-                    <img 
-                      src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=1936&auto=format&fit=crop" 
-                      alt="Purchased Item"
-                      className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                  </div>
-                  <h3 className="font-sans text-xs tracking-widest uppercase">Oversized Wool Trench</h3>
-                  <p className="font-sans text-[10px] tracking-widest uppercase text-muted-foreground mt-1">Delivered • Oct 12, 2023</p>
+              
+              {orders.length === 0 ? (
+                <div className="border border-dashed border-muted p-12 text-center space-y-6">
+                  <p className="font-sans text-xs uppercase tracking-widest text-muted-foreground">
+                    Your luxury collection is currently empty.
+                  </p>
+                  <Link 
+                    href="/shop" 
+                    className="inline-block font-sans text-xs uppercase tracking-[0.2em] border-b border-foreground pb-1 hover:text-muted-foreground hover:border-muted-foreground transition-colors"
+                  >
+                    Explore Archive
+                  </Link>
                 </div>
-              </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-6">
+                  {orders.map((order) => (
+                    <div 
+                      key={order.id} 
+                      className="border border-muted p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-foreground/45 transition-colors"
+                    >
+                      <div>
+                        <h3 className="font-sans text-xs tracking-[0.2em] uppercase">Acquisition #{order.id.slice(-6).toUpperCase()}</h3>
+                        <p className="font-sans text-[10px] tracking-widest uppercase text-muted-foreground mt-1">
+                          Ordered {new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end">
+                        <span className="font-sans text-xs tracking-widest uppercase font-medium">
+                          ₦{order.totalAmount.toLocaleString()}
+                        </span>
+                        <span className="font-sans text-[10px] tracking-widest uppercase bg-foreground text-background px-3 py-1">
+                          {order.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </section>
 
           </div>
