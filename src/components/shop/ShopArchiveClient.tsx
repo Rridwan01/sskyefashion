@@ -5,10 +5,36 @@ import Image from "next/image";
 import Link from "next/link";
 import { Product, Category } from "@prisma/client";
 import gsap from "gsap";
+import { useSearchParams } from "next/navigation";
 
 export function ShopArchiveClient({ products, categories }: { products: Product[], categories: Category[] }) {
+  const searchParams = useSearchParams();
   const [activeCategory, setActiveCategory] = useState<string>("all");
   
+  // Sync active category on load or when search parameters change
+  useEffect(() => {
+    const slug = searchParams.get("category");
+    if (slug) {
+      const match = categories.find(c => c.slug === slug);
+      if (match) {
+        setActiveCategory(match.id);
+      } else {
+        setActiveCategory("all");
+      }
+    } else {
+      setActiveCategory("all");
+    }
+  }, [searchParams, categories]);
+
+  const handleCategoryChange = (catId: string, slug?: string) => {
+    setActiveCategory(catId);
+    if (slug) {
+      window.history.pushState(null, "", `/shop?category=${slug}`);
+    } else {
+      window.history.pushState(null, "", `/shop`);
+    }
+  };
+
   // Filter products based on selected category
   const filteredProducts = activeCategory === "all" 
     ? products 
@@ -33,7 +59,7 @@ export function ShopArchiveClient({ products, categories }: { products: Product[
         
         <div className="flex flex-wrap justify-center gap-8 md:gap-16 font-sans text-xs tracking-[0.2em] uppercase">
           <button 
-            onClick={() => setActiveCategory("all")}
+            onClick={() => handleCategoryChange("all")}
             className={`transition-colors hover:text-foreground pb-2 border-b-2 ${activeCategory === "all" ? "border-foreground text-foreground" : "border-transparent text-muted-foreground"}`}
           >
             All Works
@@ -41,7 +67,7 @@ export function ShopArchiveClient({ products, categories }: { products: Product[
           {categories.map(cat => (
             <button 
               key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
+              onClick={() => handleCategoryChange(cat.id, cat.slug)}
               className={`transition-colors hover:text-foreground pb-2 border-b-2 ${activeCategory === cat.id ? "border-foreground text-foreground" : "border-transparent text-muted-foreground"}`}
             >
               {cat.name}

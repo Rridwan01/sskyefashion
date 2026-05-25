@@ -31,21 +31,21 @@ export function Header() {
     };
   }, [mobileMenuOpen]);
 
-  const [isPastHero, setIsPastHero] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
-    // Hide header when scrolling down past 100px, show when scrolling up
-    if (latest > 100 && latest > previous) {
+    // Hide header when scrolling down past 200px, show when scrolling up
+    if (latest > 200 && latest > previous) {
       setHidden(true);
     } else {
       setHidden(false);
     }
 
-    if (latest >= 800) {
-      setIsPastHero(true);
+    if (latest > 50) {
+      setIsScrolled(true);
     } else {
-      setIsPastHero(false);
+      setIsScrolled(false);
     }
   });
 
@@ -60,7 +60,7 @@ export function Header() {
         }}
         animate={hidden && !mobileMenuOpen ? "hidden" : "visible"}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} 
-        className={`fixed top-0 inset-x-0 z-50 w-full flex items-center justify-between px-6 py-6 transition-colors duration-500 pointer-events-auto ${isHome && !isPastHero && !mobileMenuOpen ? "mix-blend-difference text-white" : "bg-background/80 backdrop-blur-md text-foreground border-b border-foreground/10"}`}
+        className={`fixed top-0 inset-x-0 z-50 w-full flex items-center justify-between px-6 py-6 transition-all duration-500 pointer-events-auto ${isHome && !isScrolled && !mobileMenuOpen ? "mix-blend-difference text-white bg-transparent" : "bg-background text-foreground border-b border-foreground/10"}`}
       >
         <div className="flex items-center gap-4">
           <button 

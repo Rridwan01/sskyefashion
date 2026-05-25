@@ -18,43 +18,67 @@ export default async function NewProductPage() {
   }
 
   return (
-    <div className="max-w-3xl space-y-8">
+    <div className="max-w-4xl space-y-8 pb-24">
       <div className="flex items-center space-x-4">
         <Link href="/admin/products" className="text-foreground/50 hover:text-foreground transition-colors">
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <div>
           <h2 className="text-2xl font-semibold tracking-tight">Add Piece</h2>
-          <p className="text-foreground/50 text-sm mt-1">Upload a new item to the gallery inventory.</p>
+          <p className="text-foreground/50 text-sm mt-1">Upload a new item to the gallery inventory with luxury attributes.</p>
         </div>
       </div>
 
       <form action={handleAction} className="bg-foreground/5 border border-foreground/10 rounded-xl p-8 space-y-6">
-        <div className="space-y-2">
-          <label className="text-sm font-medium tracking-wide">Name</label>
-          <input 
-            type="text" 
-            name="name" 
-            required 
-            className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors"
-            placeholder="Oversized Wool Trench"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-sm font-medium tracking-wide">Description</label>
-          <textarea 
-            name="description" 
-            required 
-            rows={4}
-            className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors custom-scrollbar"
-            placeholder="A masterclass in modern tailoring..."
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-6">
+        
+        {/* Basic specifications */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium tracking-wide">Price (NGN)</label>
+            <label className="text-sm font-medium tracking-wide">Name <span className="text-red-500">*</span></label>
+            <input 
+              type="text" 
+              name="name" 
+              required 
+              className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors"
+              placeholder="Oversized Wool Trench"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium tracking-wide">Brand</label>
+            <input 
+              type="text" 
+              name="brand" 
+              defaultValue="SKYE Atelier"
+              className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors"
+              placeholder="SKYE Atelier"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label className="text-sm font-medium tracking-wide">Collection</label>
+            <input 
+              type="text" 
+              name="collection" 
+              className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors"
+              placeholder="e.g., Monochrome Essentials"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium tracking-wide">Aesthetic</label>
+            <input 
+              type="text" 
+              name="aesthetic" 
+              className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors"
+              placeholder="e.g., Quiet Luxury"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="space-y-2">
+            <label className="text-sm font-medium tracking-wide">Price (NGN) <span className="text-red-500">*</span></label>
             <input 
               type="number" 
               name="price" 
@@ -65,7 +89,7 @@ export default async function NewProductPage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium tracking-wide">Initial Inventory</label>
+            <label className="text-sm font-medium tracking-wide">Initial Inventory <span className="text-red-500">*</span></label>
             <input 
               type="number" 
               name="inventory" 
@@ -74,22 +98,69 @@ export default async function NewProductPage() {
               placeholder="5"
             />
           </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium tracking-wide">Category <span className="text-red-500">*</span></label>
+            <select 
+              name="categoryId" 
+              required
+              className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors appearance-none"
+            >
+              <option value="" className="bg-background text-foreground">Select a Category</option>
+              {categories.map(cat => (
+                <option key={cat.id} value={cat.id} className="bg-background text-foreground">{cat.name}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <hr className="border-foreground/10" />
+
+        {/* Descriptions and Editorial */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium tracking-wide">Public Description <span className="text-red-500">*</span></label>
+          <textarea 
+            name="description" 
+            required 
+            rows={3}
+            className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors custom-scrollbar"
+            placeholder="A masterclass in modern tailoring offering fluid drape..."
+          />
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium tracking-wide">Category</label>
-          <select 
-            name="categoryId" 
-            required
-            className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors appearance-none"
-          >
-            <option value="" className="bg-background text-foreground">Select a Category</option>
-            {categories.map(cat => (
-              <option key={cat.id} value={cat.id} className="bg-background text-foreground">{cat.name}</option>
-            ))}
-          </select>
+          <label className="text-sm font-medium tracking-wide">Editorial Sidelight</label>
+          <textarea 
+            name="editorialDescription" 
+            rows={3}
+            className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors custom-scrollbar"
+            placeholder="Narrative prose for the product detail display..."
+          />
         </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label className="text-sm font-medium tracking-wide">Fit specifications</label>
+            <textarea 
+              name="fitNotes" 
+              rows={2}
+              className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors custom-scrollbar"
+              placeholder="e.g., Oversized drape, drops shoulder..."
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium tracking-wide">Styling Recommendations</label>
+            <textarea 
+              name="stylingNotes" 
+              rows={2}
+              className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors custom-scrollbar"
+              placeholder="e.g., Pair with heavy silver hardware..."
+            />
+          </div>
+        </div>
+
+        <hr className="border-foreground/10" />
+
+        {/* Upload and Paste URLs */}
         <div className="space-y-4">
           <div className="space-y-2">
             <label className="text-sm font-medium tracking-wide block">Upload Image Files</label>
@@ -110,6 +181,37 @@ export default async function NewProductPage() {
               name="images" 
               className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors"
               placeholder="https://images.unsplash.com/..., https://..."
+            />
+          </div>
+        </div>
+
+        {/* Arrays: Sizes, Colors, Materials */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="space-y-2">
+            <label className="text-sm font-medium tracking-wide">Sizes Available (comma separated)</label>
+            <input 
+              type="text" 
+              name="sizes" 
+              className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors"
+              placeholder="S, M, L, XL"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium tracking-wide">Colors specifications (comma separated)</label>
+            <input 
+              type="text" 
+              name="colors" 
+              className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors"
+              placeholder="Black, Bone, Olive"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium tracking-wide">Materials & Blend (comma separated)</label>
+            <input 
+              type="text" 
+              name="materials" 
+              className="w-full bg-background border border-foreground/20 rounded-md px-4 py-3 text-foreground focus:outline-none focus:border-foreground/50 transition-colors"
+              placeholder="80% Cashmere, 20% Wool"
             />
           </div>
         </div>

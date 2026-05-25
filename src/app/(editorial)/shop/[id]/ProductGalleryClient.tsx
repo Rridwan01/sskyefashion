@@ -33,8 +33,7 @@ export function ProductGalleryClient({ product }: { product: any }) {
     );
   };
 
-  const productSizes = product?.sizes || ["OS"];
-  const productMaterials = product?.materials || ["Information unavailable"];
+  const productSizes = product?.sizes && product.sizes.length > 0 ? product.sizes : ["OS"];
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -127,22 +126,24 @@ export function ProductGalleryClient({ product }: { product: any }) {
         
         <div className="w-full md:w-1/2 flex flex-col sticky top-48 h-fit">
           <p className="font-serif text-2xl lg:text-3xl leading-relaxed font-light text-foreground/80">
-            {product.editorialDescription || product.description}
+            {(product.editorialDescription && product.editorialDescription.trim()) ? product.editorialDescription : product.description}
           </p>
           
           <div className="mt-16 border-t border-muted pt-8">
-            <Accordion title="Materials & Construction">
-              <div className="font-sans text-xs uppercase tracking-widest leading-loose text-muted-foreground pt-4 pb-8">
-                {productMaterials.map((detail: string, i: number) => (
-                  <p key={i}>{detail}</p>
-                ))}
-              </div>
-            </Accordion>
-            {(product.fitNotes || product.stylingNotes) && (
+            {product.materials && product.materials.length > 0 && (
+              <Accordion title="Materials & Construction">
+                <div className="font-sans text-xs uppercase tracking-widest leading-loose text-muted-foreground pt-4 pb-8">
+                  {product.materials.map((detail: string, i: number) => (
+                    <p key={i}>{detail}</p>
+                  ))}
+                </div>
+              </Accordion>
+            )}
+            {((product.fitNotes && product.fitNotes.trim()) || (product.stylingNotes && product.stylingNotes.trim())) && (
               <Accordion title="Fit & Styling">
                 <div className="font-sans text-xs uppercase tracking-widest leading-loose text-muted-foreground pt-4 pb-8 flex flex-col gap-4">
-                  {product.fitNotes && <p><span className="text-foreground">Fit:</span> {product.fitNotes}</p>}
-                  {product.stylingNotes && <p><span className="text-foreground">Styling:</span> {product.stylingNotes}</p>}
+                  {product.fitNotes && product.fitNotes.trim() && <p><span className="text-foreground">Fit:</span> {product.fitNotes}</p>}
+                  {product.stylingNotes && product.stylingNotes.trim() && <p><span className="text-foreground">Styling:</span> {product.stylingNotes}</p>}
                 </div>
               </Accordion>
             )}
