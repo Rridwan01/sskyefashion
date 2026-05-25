@@ -61,7 +61,8 @@ export default function AdminDashboard() {
       <div className="mt-12">
         <h3 className="text-lg font-medium tracking-wide mb-4">Recent Activity</h3>
         <div className="border border-foreground/10 rounded-xl bg-foreground/5 overflow-hidden">
-          <table className="w-full text-sm text-left">
+          <div className="overflow-x-auto w-full custom-scrollbar">
+            <table className="w-full min-w-[600px] text-sm text-left">
             <thead className="text-xs uppercase bg-foreground/5 text-foreground/50 border-b border-foreground/10">
               <tr>
                 <th className="px-6 py-4 font-medium tracking-widest">Piece</th>
@@ -87,6 +88,7 @@ export default function AdminDashboard() {
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>

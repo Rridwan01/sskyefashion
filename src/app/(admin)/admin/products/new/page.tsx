@@ -29,7 +29,7 @@ export default async function NewProductPage() {
         </div>
       </div>
 
-      <form action={handleAction} className="bg-foreground/5 border border-foreground/10 rounded-xl p-8 space-y-6">
+      <form action={handleAction} className="bg-foreground/5 border border-foreground/10 rounded-xl p-4 sm:p-8 space-y-6">
         
         {/* Basic specifications */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

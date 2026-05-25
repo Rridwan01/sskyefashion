@@ -18,7 +18,8 @@ export default async function CategoriesAdminPage() {
         </div>
 
         <div className="border border-foreground/10 rounded-xl bg-foreground/5 overflow-hidden">
-          <table className="w-full text-sm text-left">
+          <div className="overflow-x-auto w-full custom-scrollbar">
+            <table className="w-full min-w-[600px] text-sm text-left">
             <thead className="text-xs uppercase bg-foreground/5 text-foreground/50 border-b border-foreground/10">
               <tr>
                 <th className="px-6 py-4 font-medium tracking-widest">Name</th>
@@ -49,6 +50,7 @@ export default async function CategoriesAdminPage() {
               )}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
 

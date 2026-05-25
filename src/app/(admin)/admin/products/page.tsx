@@ -13,21 +13,22 @@ export default async function ProductsAdminPage() {
 
   return (
     <div className="space-y-8 max-w-7xl">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-semibold tracking-tight">Inventory</h2>
           <p className="text-foreground/50 text-sm mt-1">Manage all curated pieces in the SKYE gallery.</p>
         </div>
         <Link 
           href="/admin/products/new" 
-          className="bg-foreground text-background px-4 py-2 rounded-md font-medium text-sm hover:bg-foreground/90 transition-colors flex items-center"
+          className="bg-foreground text-background px-4 py-2 rounded-md font-medium text-sm hover:bg-foreground/90 transition-colors flex items-center justify-center w-full sm:w-auto"
         >
           <Plus className="w-4 h-4 mr-2" /> Add Piece
         </Link>
       </div>
 
       <div className="border border-foreground/10 rounded-xl bg-foreground/5 overflow-hidden">
-        <table className="w-full text-sm text-left">
+        <div className="overflow-x-auto w-full custom-scrollbar">
+          <table className="w-full min-w-[700px] text-sm text-left">
           <thead className="text-xs uppercase bg-foreground/5 text-foreground/50 border-b border-foreground/10">
             <tr>
               <th className="px-6 py-4 font-medium tracking-widest">Piece</th>
@@ -66,6 +67,7 @@ export default async function ProductsAdminPage() {
             )}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );
